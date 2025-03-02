@@ -1,25 +1,40 @@
 #include <SFML/Graphics.hpp>
-#include "../include/Ball.hpp"
+#include <iostream>
+#include "../include/World.hpp"  // Подключаем класс World
 
 int main() {
-    // Создаем окно размером 800x600
+    // Создаем окно SFML
     sf::RenderWindow window(sf::VideoMode(800, 600), "Physics Simulator");
 
-    // Создаем шар: центр (400, 300), скорость (0, 0), радиус 20, масса 1
-    Ball ball(Point(400, 300), Velocity(0, 0), 20, 1);
+    try {
+        // Создаем мир, загружая данные из файла
+        World world("data/smile.txt");  // Путь к файлу с шарами
+        const std::vector<Ball>& balls = world.getBalls();  // Получаем список шаров
 
-    // Основной цикл
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();  // Закрыть окно при нажатии на крестик
+        // Основной цикл
+        while (window.isOpen()) {
+            // Обработка событий (например, закрытие окна)
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
             }
-        }
 
-        window.clear();        // Очистка окна
-        ball.draw(window);     // Отрисовка шара
-        window.display();      // Отображение содержимого
+            // Отрисовка
+            window.clear();  // Очистка окна
+
+            // Рисуем все шары из мира
+            for (const Ball& ball : balls) {
+                ball.draw(window);
+            }
+
+            window.display();  // Отображение кадра
+        }
+    } catch (const std::exception& e) {
+        // Выводим ошибку, если файл не загрузился
+        std::cerr << "Ошибка: " << e.what() << std::endl;
+        return 1;
     }
 
     return 0;
