@@ -42,3 +42,8 @@ void Ball::draw(sf::RenderWindow& window) const {
     circle.setFillColor(sf::Color::Red);  // Цвет шара (красный)
     window.draw(circle);  // Рисуем круг в окне
 }
+ // Обновление позиции шара
+void Ball::update(double deltaTime) {
+   center.x += velocity.vx * deltaTime;  // Обновляем координату X
+   center.y += velocity.vy * deltaTime;  // Обновляем координату Y
+} 
