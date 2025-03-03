@@ -30,6 +30,9 @@ public:
 
     // Метод отрисовки шара
     void draw(sf::RenderWindow& window) const;
+
+ // Новый метод: обновление позиции шара
+ void update(double deltaTime);
 };
 
 #endif
