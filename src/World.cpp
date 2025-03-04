@@ -1,7 +1,7 @@
-#include "../include/World.hpp"
-#include <fstream>
-#include <sstream>
-#include <iostream>
+#include "../include/World.hpp"// Для объявления класса World
+#include <fstream> // Для std::ifstream
+#include <sstream> // Для std::istringstream
+#include <iostream>// Для std::cerr
 
 World::World(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -11,6 +11,7 @@ World::World(const std::string& filePath) {
 
     double x, y, vx, vy, red, green, blue, radius;
     bool isCollidable;
+    double target_x, target_y; // Целевые координаты
 
     std::string line;
     while (std::getline(file, line)) {
@@ -24,10 +25,12 @@ World::World(const std::string& filePath) {
         }
 
         std::istringstream iss(line);
-        if (iss >> x >> y >> vx >> vy >> red >> green >> blue >> radius >> std::boolalpha >> isCollidable) {
+        if (iss >> x >> y >> vx >> vy >> red >> green >> blue >> radius >> std::boolalpha >> isCollidable >> target_x >> target_y) {
             Point center(x, y);
             Velocity velocity(vx, vy);
-            Ball ball(center, velocity, radius, /* масса = радиус */ radius, red, green, blue);
+            Point target(target_x, target_y); // Целевая позиция
+
+            Ball ball(center, velocity, radius, /* масса = радиус */ radius, red, green, blue, target);
             balls.push_back(ball);
         } else {
             std::cerr << "Ошибка чтения строки: " << line << std::endl;
