@@ -1,6 +1,7 @@
 #include "../include/World.hpp"
-#include <iostream>
+#include <fstream>
 #include <sstream>
+#include <iostream>
 
 World::World(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -15,13 +16,11 @@ World::World(const std::string& filePath) {
     std::string line;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        
-        // Считываем данные шара
         if (iss >> x >> y >> vx >> vy >> red >> green >> blue >> radius >> std::boolalpha >> isCollidable) {
             // Создаем объекты Point, Velocity и Ball
             Point center(x, y);
             Velocity velocity(vx, vy);
-            Ball ball(center, velocity, radius, /* масса = радиус */ radius);
+            Ball ball(center, velocity, radius, /* масса = радиус */ radius, red, green, blue);
 
             // Добавляем шар в список
             balls.push_back(ball);

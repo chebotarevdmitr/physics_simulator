@@ -1,9 +1,9 @@
 #ifndef BALL_HPP
 #define BALL_HPP
 
-#include <SFML/Graphics.hpp>  // Для отрисовки
-#include "Point.hpp"          // Для координат
-#include "Velocity.hpp"       // Для скорости
+#include <SFML/Graphics.hpp>
+#include "Point.hpp"
+#include "Velocity.hpp"
 
 class Ball {
 private:
@@ -11,28 +11,26 @@ private:
     Velocity velocity;  // Скорость шара
     double radius;   // Радиус
     double mass;     // Масса
+    int red, green, blue; // Цвет шара (RGB)
 
 public:
-    // Конструктор: принимает центр, скорость, радиус и массу
-    Ball(const Point& center, const Velocity& velocity, double radius, double mass);
+    // Конструктор: принимает центр, скорость, радиус, массу и цвет
+    Ball(const Point& center, const Velocity& velocity, double radius, double mass, int red, int green, int blue);
 
-    // Геттеры и сеттеры для скорости
     void setVelocity(const Velocity& velocity);
     Velocity getVelocity() const;
 
-    // Геттеры и сеттеры для позиции
     void setCenter(const Point& center);
     Point getCenter() const;
 
-    // Геттеры для радиуса и массы (сеттеры не нужны, так как они не меняются)
     double getRadius() const;
     double getMass() const;
 
-    // Метод отрисовки шара
-    void draw(sf::RenderWindow& window) const;
+    // Метод для обновления позиции шара
+    void update(double deltaTime);
 
- // Новый метод: обновление позиции шара
- void update(double deltaTime);
+    // Метод для отрисовки шара
+    void draw(sf::RenderWindow& window) const;
 };
 
 #endif
