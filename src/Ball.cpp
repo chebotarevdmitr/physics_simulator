@@ -43,8 +43,8 @@ void Ball::update(double deltaTime) {
            velocity.vy = 0;
        } else {
            // Нормализуем направление и умножаем на скорость
-           velocity.vx = dx / distance * 3.0; // Увеличиваем скорость (умножаем на 2.0)
-           velocity.vy = dy / distance * 3.0;
+           velocity.vx = dx / distance * 4.0; // Увеличиваем скорость (умножаем на 4.0)
+           velocity.vy = dy / distance * 4.0;
        }
 
        // Обновляем позицию
