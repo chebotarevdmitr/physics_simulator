@@ -12,17 +12,13 @@ World::World(const std::string& filePath) {
     double x, y, vx, vy, red, green, blue, radius;
     bool isCollidable;
 
-    // Читаем файл по строкам
     std::string line;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         if (iss >> x >> y >> vx >> vy >> red >> green >> blue >> radius >> std::boolalpha >> isCollidable) {
-            // Создаем объекты Point, Velocity и Ball
             Point center(x, y);
             Velocity velocity(vx, vy);
             Ball ball(center, velocity, radius, /* масса = радиус */ radius, red, green, blue);
-
-            // Добавляем шар в список
             balls.push_back(ball);
         } else {
             std::cerr << "Ошибка чтения строки: " << line << std::endl;

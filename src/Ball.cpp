@@ -1,36 +1,51 @@
-#ifndef BALL_HPP
-#define BALL_HPP
+#include "../include/Ball.hpp"
 
-#include <SFML/Graphics.hpp>
-#include "../include/Point.hpp"
-#include "../include/Velocity.hpp"
+// Конструктор
+Ball::Ball(const Point& center, const Velocity& velocity, double radius, double mass, int red, int green, int blue)
+    : center(center), velocity(velocity), radius(radius), mass(mass), red(red), green(green), blue(blue) {}
 
-class Ball {
-private:
-    Point center;    // Центр шара
-    Velocity velocity;  // Скорость шара
-    double radius;   // Радиус
-    double mass;     // Масса
-    int red, green, blue; // Цвет шара (RGB)
+void Ball::setVelocity(const Velocity& velocity) {
+    this->velocity = velocity;
+}
 
-public:
-    // Конструктор: принимает центр, скорость, радиус, массу и цвет
-    Ball(const Point& center, const Velocity& velocity, double radius, double mass, int red, int green, int blue);
+Velocity Ball::getVelocity() const {
+    return velocity;
+}
 
-    void setVelocity(const Velocity& velocity);
-    Velocity getVelocity() const;
+void Ball::setCenter(const Point& center) {
+    this->center = center;
+}
 
-    void setCenter(const Point& center);
-    Point getCenter() const;
+Point Ball::getCenter() const {
+    return center;
+}
 
-    double getRadius() const;
-    double getMass() const;
+double Ball::getRadius() const {
+    return radius;
+}
 
-    // Метод для обновления позиции шара
-    void update(double deltaTime);
+double Ball::getMass() const {
+    return mass;
+}
 
-    // Метод для отрисовки шара
-    void draw(sf::RenderWindow& window) const;
-};
+// Обновление позиции шара на основе скорости и времени
+void Ball::update(double deltaTime) {
+    center.x += velocity.vx * deltaTime;
+    center.y += velocity.vy * deltaTime;
 
-#endif
+    // Ограничение границ окна (800x600)
+    if (center.x - radius < 0 || center.x + radius > 800) {
+        velocity.vx = -velocity.vx;
+    }
+    if (center.y - radius < 0 || center.y + radius > 600) {
+        velocity.vy = -velocity.vy;
+    }
+}
+
+// Отрисовка шара в окне SFML
+void Ball::draw(sf::RenderWindow& window) const {
+    sf::CircleShape circle(radius);
+    circle.setPosition(center.x - radius, center.y - radius);
+    circle.setFillColor(sf::Color(red, green, blue));
+    window.draw(circle);
+}

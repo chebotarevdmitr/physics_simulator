@@ -7,10 +7,10 @@
 
 class Ball {
 private:
-    Point center;    // Центр шара
-    Velocity velocity;  // Скорость шара
-    double radius;   // Радиус
-    double mass;     // Масса
+    Point center;
+    Velocity velocity;
+    double radius;
+    double mass;
     int red, green, blue; // Цвет шара (RGB)
 
 public:
